@@ -7,6 +7,10 @@ class TestGuessTheNumberGame(unittest.TestCase):
 
     def setUp(self):
         self.game = GuessTheNumberGame()
+        self.game.number = '1234'  # Set the default number
+
+    def test_generate_random_number(self):
+        self.assertTrue(1000 <= int(self.game.number) <= 9999)
 
     @patch('builtins.input', side_effect=['1234','n'])
     def test_correct_guess(self, mock_input):
@@ -26,6 +30,27 @@ class TestGuessTheNumberGame(unittest.TestCase):
             self.assertIn("Invalid input. Please enter a valid 4-digit number.", output)
             self.assertIn("Invalid input. Please enter a valid 4-digit number.", output)
             self.assertIn("Invalid input. Please enter a valid 4-digit number.", output)
+    
+    @patch('builtins.input', side_effect=["1253"])
+    def test_partial_correct_guess(self, mock_input):
+        with patch('sys.stdout', new_callable=StringIO) as mock_output:
+            self.game.number = "1234"
+            self.game.give_hints(input())
+            output = mock_output.getvalue().strip()
+            expected_hints = "O O - X"
+            expected_output = f"Hints: {expected_hints}"
+            self.assertEqual(output, expected_output)
+
+    @patch('builtins.input', side_effect=["5678"])
+    def test_no_correct_digits(self, mock_input):
+        with patch('sys.stdout', new_callable=StringIO) as mock_output:
+            self.game.number = "1234"
+            self.game.give_hints(input())
+            output = mock_output.getvalue().strip()
+            expected_hints = "- - - -"
+            expected_output = f"Hints: {expected_hints}"
+            self.assertEqual(output, expected_output)
+
 
     @patch('builtins.input', side_effect=['y','q'])
     def test_play_again_yes(self, mock_input):

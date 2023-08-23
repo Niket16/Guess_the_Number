@@ -10,16 +10,33 @@ class GuessTheNumberGame:
         while True:
             guess = input("Enter your guess (4 digits) or 'q' to quit: ")
             if guess.lower() == 'q':
+             self.attempts = 0
              break
             if not guess.isdigit() or len(guess) != 4:
                 print("Invalid input. Please enter a valid 4-digit number.")
                 continue
             self.attempts += 1
+            self.give_hints(guess)
             if guess == self.number:
                 print("Congratulations! You guessed the number correctly.")
                 print("Number of attempts:", self.attempts)
                 self.ask_to_play_again()
                 break
+    
+    def give_hints(self, guess):
+        hints = []
+        for i in range(len(guess)):
+            if guess[i] == self.number[i]:
+                hints.append('O')
+            elif guess[i] in self.number:
+                hints.append('X')
+            else:
+                hints.append('-')
+        if len(hints) == 0:
+            print("No digits are correct.")
+        else:
+            if(" ".join(hints) != "O O O O"):
+                print("Hints:", " ".join(hints))
 
     def ask_to_play_again(self):
         self.attempts = 0

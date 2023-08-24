@@ -15,6 +15,8 @@
 """
 
 import random
+# import time
+
 
 class GuessTheNumberGame:
     """Number guessing game for 4-digit numbers."""
@@ -24,12 +26,40 @@ class GuessTheNumberGame:
         # print(self.number)
         self.attempts = 0
 
+    # Print in typing effect in CLI
+    # def print_typing_effect(self, text, delay=0.01):
+    #     for char in text:
+    #         print(char, end='', flush=True)
+    #         time.sleep(delay)
+    #     print()
+
+    @staticmethod
+    def print_game_intro():
+        """Prints game introduction with rules and hints for the Guess The Number game."""
+
+        print("=============================================================")
+        print("                     GUESS THE NUMBER GAME                   ")
+        print("=============================================================")
+        print("Welcome, brave challenger!")
+        print("Can you crack the code and reveal")
+        print("the secret 4-digit number?")
+        print("You'll receive hints after each guess.")
+        print("Legend:")
+        print("     O - Correct digit in correct position")
+        print("     X - Correct digit in wrong position")
+        print("     - - Incorrect digit")
+        print("=============================================================")
+
     def play_game(self):
         """Play the number guessing game, providing hints and tracking attempts."""
+
+        self.print_game_intro()
 
         while True:
             guess = input("Enter your guess (4 digits) or 'q' to quit: ")
             if guess.lower() == 'q':
+                print("\nOh no, you've decided to leave the challenge...")
+                print(f"But wait, the secret number you were after is: {self.number}!")
                 self.attempts = 0
                 break
             if not guess.isdigit() or len(guess) != 4:

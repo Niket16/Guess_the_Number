@@ -79,7 +79,8 @@ class TestGuessTheNumberGame(unittest.TestCase):
         print("Correct guess test passed: "
               "Output messages and attempts tracking are working as expected.")
 
-    @patch('builtins.input', side_effect=['123a', '12345', 'abcd', '6789', '4567', '9876', 'q'])
+    @patch('builtins.input', side_effect=['123a', '12345', 'abcd',
+                                          '6789', '4567', '9876', 'q'])
     def test_invalid_inputs(self, _):
         """Test handling of various invalid inputs during gameplay."""
 
@@ -89,7 +90,8 @@ class TestGuessTheNumberGame(unittest.TestCase):
             self.assertIn("Invalid input. Please enter a valid 4-digit number.", output)
             self.assertIn("Invalid input. Please enter a valid 4-digit number.", output)
             self.assertIn("Invalid input. Please enter a valid 4-digit number.", output)
-        print("Invalid inputs test passed: Handling of invalid inputs during gameplay is correct.")
+        print("Invalid inputs test passed: "
+              "Handling of invalid inputs during gameplay is correct.")
 
     @patch('builtins.input', side_effect=["1253"])
     def test_partial_correct_guess(self, _):
